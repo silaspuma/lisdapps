@@ -30,6 +30,25 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
+            text-align: center; /* Centering for the top button */
+        }
+
+        .header-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 30px;
+            transition: background 0.2s;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
 
         h1 {
@@ -37,6 +56,7 @@
             font-weight: 600;
             margin-bottom: 24px;
             letter-spacing: -0.5px;
+            text-align: left; /* Keep title aligned left per original */
         }
 
         .project-card {
@@ -48,6 +68,7 @@
             display: flex;
             align-items: center;
             transition: transform 0.2s ease;
+            text-align: left;
         }
 
         .project-card:hover {
@@ -72,7 +93,6 @@
             margin-bottom: 8px;
         }
 
-        /* Progress Bar Styling */
         .progress-container {
             background: #3a3a3c;
             height: 6px;
@@ -84,7 +104,7 @@
         .progress-fill {
             background: var(--accent-blue);
             height: 100%;
-            width: 0%; /* Animated via JS */
+            width: 0%;
             transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -96,7 +116,6 @@
             text-align: right;
         }
 
-        /* Button Styling */
         .action-button {
             background: var(--accent-blue);
             color: white;
@@ -120,6 +139,8 @@
 <body>
 
 <div class="container">
+    <a href="https://tally.so/forms/QK5y0X" target="_blank" class="header-btn">Submit a Request</a>
+    
     <h1>status of my current projects :3</h1>
 
     <div class="project-card">
@@ -153,7 +174,7 @@
             </div>
         </div>
         <div class="percentage">100%</div>
-        <a href="https://tateify.netlify.app" target="_blank" class="action-button">open</a>
+        <a href="https://tateify.netlify.app" target="_blank" class="action-button">Open</a>
     </div>
 </div>
 
