@@ -95,6 +95,26 @@
             min-width: 35px;
             text-align: right;
         }
+
+        /* Button Styling */
+        .action-button {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .action-button:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -123,10 +143,21 @@
         </div>
         <div class="percentage">75%</div>
     </div>
+
+    <div class="project-card">
+        <img src="tateify.png" alt="Tateify" class="icon" onerror="this.src='https://via.placeholder.com/48?text=TF'">
+        <div class="info">
+            <div class="project-name">tateify</div>
+            <div class="progress-container">
+                <div class="progress-fill" data-percent="100"></div>
+            </div>
+        </div>
+        <div class="percentage">100%</div>
+        <a href="https://tateify.netlify.app" target="_blank" class="action-button">open</a>
+    </div>
 </div>
 
 <script>
-    // Simple animation logic to fill bars on load
     window.onload = () => {
         const bars = document.querySelectorAll('.progress-fill');
         bars.forEach(bar => {
