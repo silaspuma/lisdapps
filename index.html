@@ -167,8 +167,8 @@
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 6px 12px;
-            font-size: 12px;
+            padding: 8px 16px;
+            font-size: 13px;
             font-weight: 600;
             margin-left: 10px;
             cursor: pointer;
@@ -195,7 +195,7 @@
                 <div class="project-name">tiktok</div>
                 <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
-            <div class="percentage">50%</div>
+            <div class="percentage"></div>
         </div>
 
         <div class="project-card" data-percent="75">
@@ -204,16 +204,14 @@
                 <div class="project-name">spotify</div>
                 <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
-            <div class="percentage">75%</div>
+            <div class="percentage"></div>
         </div>
 
         <div class="project-card" data-percent="100">
             <img src="tateify.png" alt="Tateify" class="icon" onerror="this.src='https://via.placeholder.com/48?text=TF'">
             <div class="info">
                 <div class="project-name">tateify</div>
-                <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
-            <div class="percentage">100%</div>
             <a href="https://tateify.netlify.app" target="_blank" class="action-button">Open</a>
         </div>
 
@@ -223,7 +221,7 @@
                 <div class="project-name">chatgpt</div>
                 <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
-            <div class="percentage">3%</div>
+            <div class="percentage"></div>
         </div>
 
         <div class="project-card" data-percent="0">
@@ -232,7 +230,7 @@
                 <div class="project-name">netflix</div>
                 <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
-            <div class="percentage">0%</div>
+            <div class="percentage"></div>
         </div>
     </div>
 </div>
@@ -242,26 +240,27 @@
         const list = document.getElementById('list');
         const cards = Array.from(document.querySelectorAll('.project-card'));
 
-        // Sort cards by data-percent descending
         cards.sort((a, b) => {
             return parseInt(b.getAttribute('data-percent')) - parseInt(a.getAttribute('data-percent'));
         });
 
-        // Re-append to DOM in sorted order and trigger animation
         cards.forEach(card => {
             list.appendChild(card);
-            const percent = card.getAttribute('data-percent');
+            const percent = parseInt(card.getAttribute('data-percent'));
             const fill = card.querySelector('.progress-fill');
             const label = card.querySelector('.percentage');
             
-            // Sync text and bar automatically
-            label.innerText = percent + '%';
-            setTimeout(() => {
-                fill.style.width = percent + '%';
-            }, 100);
+            if (label && percent < 100) {
+                label.innerText = percent + '%';
+            }
+            
+            if (fill) {
+                setTimeout(() => {
+                    fill.style.width = percent + '%';
+                }, 100);
+            }
         });
 
-        // Handle Success Banner
         const urlParams = new URLSearchParams(window.location.search);
         const featureName = urlParams.get('feature');
         if (featureName) {
