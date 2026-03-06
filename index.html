@@ -26,7 +26,7 @@
             margin: 0;
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* Prevents whole-page scrolling */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -65,7 +65,7 @@
 
         .header-section {
             text-align: center;
-            flex-shrink: 0; /* Keeps header from squishing */
+            flex-shrink: 0;
         }
 
         .header-btn {
@@ -90,16 +90,16 @@
             text-align: left;
         }
 
-        /* Scrollable area for projects only if they overflow the screen */
         .projects-list {
             flex-grow: 1;
             overflow-y: auto;
-            padding-right: 4px; /* Space for scrollbar */
-            scrollbar-width: none; /* Firefox hide scrollbar */
+            scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
         }
 
         .projects-list::-webkit-scrollbar {
-            display: none; /* Chrome/Safari hide scrollbar */
+            display: none;
         }
 
         .project-card {
@@ -129,7 +129,7 @@
 
         .info {
             flex-grow: 1;
-            min-width: 0; /* Allows text truncation if needed */
+            min-width: 0;
         }
 
         .project-name {
@@ -188,59 +188,49 @@
     
     <h1>status of my current projects :3</h1>
 
-    <div class="projects-list">
-        <div class="project-card">
+    <div class="projects-list" id="list">
+        <div class="project-card" data-percent="50">
             <img src="tiktok.png" alt="TikTok" class="icon" onerror="this.src='https://via.placeholder.com/48?text=TT'">
             <div class="info">
                 <div class="project-name">tiktok</div>
-                <div class="progress-container">
-                    <div class="progress-fill" data-percent="50"></div>
-                </div>
+                <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
             <div class="percentage">50%</div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" data-percent="75">
             <img src="spotify.png" alt="Spotify" class="icon" onerror="this.src='https://via.placeholder.com/48?text=SP'">
             <div class="info">
                 <div class="project-name">spotify</div>
-                <div class="progress-container">
-                    <div class="progress-fill" data-percent="75"></div>
-                </div>
+                <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
             <div class="percentage">75%</div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" data-percent="100">
             <img src="tateify.png" alt="Tateify" class="icon" onerror="this.src='https://via.placeholder.com/48?text=TF'">
             <div class="info">
                 <div class="project-name">tateify</div>
-                <div class="progress-container">
-                    <div class="progress-fill" data-percent="100"></div>
-                </div>
+                <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
             <div class="percentage">100%</div>
             <a href="https://tateify.netlify.app" target="_blank" class="action-button">Open</a>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" data-percent="3">
             <img src="chatgpt.png" alt="ChatGPT" class="icon" onerror="this.src='https://via.placeholder.com/48?text=AI'">
             <div class="info">
                 <div class="project-name">chatgpt</div>
-                <div class="progress-container">
-                    <div class="progress-fill" data-percent="3"></div>
-                </div>
+                <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
             <div class="percentage">3%</div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" data-percent="0">
             <img src="netflix.png" alt="Netflix" class="icon" onerror="this.src='https://via.placeholder.com/48?text=NF'">
             <div class="info">
                 <div class="project-name">netflix</div>
-                <div class="progress-container">
-                    <div class="progress-fill" data-percent="0"></div>
-                </div>
+                <div class="progress-container"><div class="progress-fill"></div></div>
             </div>
             <div class="percentage">0%</div>
         </div>
@@ -249,17 +239,31 @@
 
 <script>
     window.onload = () => {
-        const bars = document.querySelectorAll('.progress-fill');
-        bars.forEach(bar => {
-            const percentage = bar.getAttribute('data-percent');
+        const list = document.getElementById('list');
+        const cards = Array.from(document.querySelectorAll('.project-card'));
+
+        // Sort cards by data-percent descending
+        cards.sort((a, b) => {
+            return parseInt(b.getAttribute('data-percent')) - parseInt(a.getAttribute('data-percent'));
+        });
+
+        // Re-append to DOM in sorted order and trigger animation
+        cards.forEach(card => {
+            list.appendChild(card);
+            const percent = card.getAttribute('data-percent');
+            const fill = card.querySelector('.progress-fill');
+            const label = card.querySelector('.percentage');
+            
+            // Sync text and bar automatically
+            label.innerText = percent + '%';
             setTimeout(() => {
-                bar.style.width = percentage + '%';
+                fill.style.width = percent + '%';
             }, 100);
         });
 
+        // Handle Success Banner
         const urlParams = new URLSearchParams(window.location.search);
         const featureName = urlParams.get('feature');
-
         if (featureName) {
             const banner = document.getElementById('success-banner');
             banner.innerHTML = `thanks for submitting! we'll start working on <b>${decodeURIComponent(featureName)}</b>`;
